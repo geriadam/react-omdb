@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from './actions';
+import { Strings } from './constants'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Search from './components/Search/Search';
+import MovieList from './components/MovieList/MovieList';
+
+class App extends Component {
+  componentWillMount() {
+    this.props.fetchMovies('cool');
+  }
+
+  render() {
+    const { global } = Strings;
+    return (
+      <div>
+        <Search />
+        <MovieList movies={this.props.movies} />
+      </div>
+    )
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return { movies: state.movies };
+}
+
+export default connect(mapStateToProps, actions)(App);

@@ -18,6 +18,20 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll, false);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll, false);
+  }
+
+  hasReachedBottom() {
+    return (
+      Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight
+    );
+  }
+
   resetState = () => {
     this.setState({
       text: '',
@@ -62,21 +76,10 @@ class App extends Component {
     }
   };
 
-  onInfiniteScroll = () => {
-    const wrappedElement = document.getElementById('container-app');
-    if (wrappedElement.scrollHeight - wrappedElement.scrollTop === wrappedElement.clientHeight) {
+  handleScroll = () => {
+    if (this.hasReachedBottom()) {
       this.loadMoreItems();
-      document.removeEventListener('scroll', this.onInfiniteScroll);
     }
-    /*this.iScroll.addEventListener("scroll", () => {
-      console.log("sas");
-      if (
-        this.iScroll.scrollTop + this.iScroll.clientHeight >=
-        this.iScroll.scrollHeight - 20
-      ) {
-        this.loadMoreItems();
-      }
-    });*/
   };
 
   render() {

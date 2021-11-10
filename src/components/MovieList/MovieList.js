@@ -28,7 +28,7 @@ const MovieList = ({ movies, currentItemPage}) => {
     setMovie(null);
   }
   return (
-    <div className="container" id="container-app">
+    <div className="container">
       <div className="row">
         {movies.slice(0, currentItemPage).map((movie, i) => (
           <MovieItem

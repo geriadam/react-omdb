@@ -15,7 +15,7 @@ export const fetchMovies = (text, page = 1) => {
       const response = await axios.get(`${Config.url}/?apikey=${Config.apiKey}&s=${text}&page=${page}`);
       dispatch({
         type: ACT_MOVIES_SUCCESS,
-        payload: response.data.Search,
+        payload: response.data,
       })
     } catch (error){
       console.log(error)

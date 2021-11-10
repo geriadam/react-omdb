@@ -6,6 +6,7 @@ import {
 
 const initialState = {
   movies: [],
+  totalResults: 0,
   loading: false,
 }
 
@@ -14,7 +15,7 @@ const movieReducer = (state = initialState, action) => {
     case ACT_MOVIES_REQUEST:
       return { ...state, loading: true };
     case ACT_MOVIES_SUCCESS:
-      return { ...state, movies: action.payload, loading: false };
+      return { ...state, movies: action.payload.Search, totalResults: action.payload.totalResults, loading: false };
     default:
       return state;
   }

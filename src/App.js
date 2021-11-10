@@ -18,33 +18,48 @@ class App extends Component {
     };
   }
 
-  loadData = () => {
+  resetState = () => {
+    this.setState({
+      text: '',
+      movies: [],
+      currentPage: 1,
+      currentItemPage: 5,
+      itemsPerPage: 5,
+    })
+  }
+
+  loadData = async () => {
     if (this.state.currentItemPage % 10 === 0) {
-      this.setState({currentPage: Number(this.state.currentPage) + 1})
-      this.props.fetchMovies(this.state.text, this.state.currentPage);
-      const data = [...this.state.movies, ...this.props.movies];
-      this.setState({movies: data});
+      const page = this.state.currentPage + 1;
+      await this.props.fetchMovies(this.state.text, page);
+      if (this.props.movies !== undefined && this.props.movies.length > 0) {
+        const data = [...this.state.movies, ...this.props.movies];
+        this.setState({movies: data, currentPage: page, currentItemPage: data.length});
+      }
     }
   }
 
-  handleSearch = (value) => {
-    this.setState(previousState => ({
-      text: value,
-    }), () => {
-      this.props.fetchMovies(this.state.text);
-    });
-    setTimeout(() => {
-      this.setState({movies: this.props.movies});
-    }, 1000);
-    
+  handleSearch = async (value) => {
+    this.resetState();
+    this.setState({ text: value });
+    await this.props.fetchMovies(value);
+    if (this.props.movies !== undefined && this.props.movies.length > 0) {
+      setTimeout(() => {
+        this.setState({movies: this.props.movies});
+      }, 1000);
+    }    
   }
 
   loadMoreItems = () => {
     if (this.props.loadingMovies) {
       return;
     }
-    this.loadData();
-    this.setState({ currentItemPage: this.state.currentItemPage += this.state.itemsPerPage});
+
+    if (this.state.currentItemPage % 10 !== 0) {
+      this.setState({ currentItemPage: this.state.currentItemPage += this.state.itemsPerPage});
+    } else {
+      this.loadData();
+    }
   };
 
   onInfiniteScroll = () => {
@@ -65,7 +80,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <div>
         <Search onSearch={this.handleSearch}/>
@@ -77,7 +91,7 @@ class App extends Component {
           && <button className="btn btn-primary mx-auto d-block mb-5" onClick={this.loadMoreItems} >load data</button>
         }
         {
-          this.props.loadingMovies && <p className="text-center">Wait</p>
+          this.props.loadingMovies && this.state.movies.length < this.props.totalResults && <p className="text-center">Wait</p>
         }
       </div>
     )
@@ -87,7 +101,8 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     movies: state.movies.movies,
-    loadingMovies: state.movies.loading
+    loadingMovies: state.movies.loading,
+    totalResults: state.movies.totalResults
   };
 }
 

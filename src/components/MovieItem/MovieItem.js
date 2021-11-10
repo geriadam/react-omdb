@@ -2,12 +2,12 @@ import React from 'react';
 import styles from './styles.module.css';
 import noImage from '../../assets/noImage.png';
 
-const MovieItem = ({ id, year, title, type, posterUrl, handleClick}) => {
-  const poster = posterUrl === 'N/A' ? noImage : posterUrl;
-  const imgAltText = posterUrl === 'N/A' ? `Missing poster for ${title}` : `Poster for ${title}`;
+const MovieItem = ({ movie, handleClick}) => {
+  const poster = movie.Poster === 'N/A' ? noImage : movie.Poster;
+  const imgAltText = movie.Poster === 'N/A' ? `Missing poster for ${movie.Title}` : `Poster for ${movie.Title}`;
 
   const onClickItem = () => {
-    handleClick(id);
+    handleClick(movie.imdbID);
   }
 
   return (
@@ -15,7 +15,7 @@ const MovieItem = ({ id, year, title, type, posterUrl, handleClick}) => {
       <div className={`card card-body bg-dark text-center h-100 ${styles.card}`} onClick={onClickItem}>
         <img className="w-100 mb-2" src={poster} alt={imgAltText} />
         <h5 className="text-light card-title">
-          {title} - {year}
+          {movie.Title} - {movie.Year}
         </h5>
       </div>
     </div>

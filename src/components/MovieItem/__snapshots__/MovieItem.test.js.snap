@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieItem poster does not exist should create the MovieItem component 1`] = `
+<div
+  className="mx-auto col-sm-6 col-md-4 col-lg-4 mb-5"
+>
+  <div
+    className="card card-body bg-dark text-center h-100 card"
+    onClick={[Function]}
+  >
+    <img
+      alt="Missing poster for star wars"
+      className="w-100 mb-2"
+      src="noImage.png"
+    />
+    <h5
+      className="text-light card-title"
+    >
+      star wars
+       - 
+      1999
+    </h5>
+  </div>
+</div>
+`;
+
+exports[`MovieItem poster exists should create the MovieItem component 1`] = `
+<div
+  className="mx-auto col-sm-6 col-md-4 col-lg-4 mb-5"
+>
+  <div
+    className="card card-body bg-dark text-center h-100 card"
+    onClick={[Function]}
+  >
+    <img
+      alt="Poster for star wars"
+      className="w-100 mb-2"
+      src="star wars poster"
+    />
+    <h5
+      className="text-light card-title"
+    >
+      star wars
+       - 
+      1999
+    </h5>
+  </div>
+</div>
+`;

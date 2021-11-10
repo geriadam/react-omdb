@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Strings } from '../../constants';
 
-const { global } = Strings;
-
 const Search = ({ onSearch }) => {
   const [term, setTerm] = useState('');
 
@@ -18,13 +16,13 @@ const Search = ({ onSearch }) => {
     <div className="jumbotron jumbotron-fluid py-5 mb-3">
       <div className="container">
         <h1 className="display-4 mb-3 text-center">
-          {global.title}
+          {Strings.global.title}
         </h1>
         <div className="search-bar input-group">
           <input
             value={term}
             className="form-control"
-            placeholder={global.placeholderSearch}
+            placeholder={Strings.global.placeholderSearch}
             onChange={handleChangeSearch}
           />
           <span className="input-group-btn">
@@ -33,7 +31,7 @@ const Search = ({ onSearch }) => {
               type="button"
               onClick={() => handleSubmitSearch()}
             >
-              {global.buttonSearch}
+              {Strings.global.buttonSearch}
             </button>
           </span>
         </div>

@@ -33,11 +33,7 @@ const MovieList = ({ movies, currentItemPage}) => {
         {movies.slice(0, currentItemPage).map((movie, i) => (
           <MovieItem
             key={i}
-            id={movie.imdbID}
-            title={movie.Title}
-            posterUrl={movie.Poster}
-            year={movie.Year}
-            type={movie.Type}
+            movie={movie}
             handleClick={openModal}
           />
         ))}

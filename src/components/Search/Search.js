@@ -1,17 +1,45 @@
-import React, { Component } from 'react';
-import styles from './styles.module.css';
+import React, { useState } from 'react';
+import { Strings } from '../../constants';
 
-class Search extends Component {
-    constructor(props) {
-      super(props);
-      this.state = { term: '' };
-    }
+const { global } = Strings;
 
-    render() {
-      return (
-        <h5 className={styles.text}>Search</h5>
-      );
-    }
+const Search = ({ onSearch }) => {
+  const [term, setTerm] = useState('');
+
+  const handleChangeSearch = (event) => {
+    setTerm(event.target.value);
+  }
+
+  const handleSubmitSearch = () => {
+    onSearch(term);
+  } 
+
+  return (
+    <div className="jumbotron jumbotron-fluid py-5 mb-3">
+      <div className="container">
+        <h1 className="display-4 mb-3 text-center">
+          {global.title}
+        </h1>
+        <div className="search-bar input-group">
+          <input
+            value={term}
+            className="form-control"
+            placeholder={global.placeholderSearch}
+            onChange={handleChangeSearch}
+          />
+          <span className="input-group-btn">
+            <button
+              className="btn btn-success"
+              type="button"
+              onClick={() => handleSubmitSearch()}
+            >
+              {global.buttonSearch}
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Search;

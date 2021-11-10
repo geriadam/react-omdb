@@ -1,20 +1,32 @@
 import axios from 'axios';
+import { Config } from '../constants';
 import {
   ACT_MOVIES_REQUEST,
+  ACT_MOVIES_SUCCESS,
   ACT_MOVIES_CLEAR,
 } from '../constants/actions';
 
-export const fetchMovies = (term) => {
-  const request = axios.get(`https://www.omdbapi.com/?apikey=c148ab6e&s=${term}`);
-
-  return {
-    type: ACT_MOVIES_REQUEST,
-    payload: request
+export const fetchMovies = (text, page = 1) => {
+  return async dispatch => {
+    dispatch({
+      type: ACT_MOVIES_REQUEST,
+    })
+    try {
+      const response = await axios.get(`${Config.url}/?apikey=${Config.apiKey}&s=${text}&page=${page}`);
+      dispatch({
+        type: ACT_MOVIES_SUCCESS,
+        payload: response.data.Search,
+      })
+    } catch (error){
+      console.log(error)
+    }
   }
 }
 
 export const clearMovies = () => {
-  return {
-    type: ACT_MOVIES_CLEAR
+  return dispatch => {
+    dispatch({
+      type: ACT_MOVIES_CLEAR,
+    })
   }
 }

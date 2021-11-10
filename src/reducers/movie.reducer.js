@@ -1,16 +1,23 @@
 import {
   ACT_MOVIES_REQUEST,
+  ACT_MOVIES_SUCCESS,
   ACT_MOVIES_CLEAR,
 } from '../constants/actions';
 
-const movieReducer = (state = [], action) => {
-  if (action.type === ACT_MOVIES_REQUEST) {
-    return action.payload.data.Search;
-  } else if (action.type === ACT_MOVIES_CLEAR) {
-    return [];
-  }
+const initialState = {
+  movies: [],
+  loading: false,
+}
 
-  return state;
+const movieReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ACT_MOVIES_REQUEST:
+      return { ...state, loading: true };
+    case ACT_MOVIES_SUCCESS:
+      return { ...state, movies: action.payload, loading: false };
+    default:
+      return state;
+  }
 }
 
 export default movieReducer;
